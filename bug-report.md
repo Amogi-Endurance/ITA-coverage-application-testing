@@ -98,10 +98,10 @@ Description:
 The system incorrectly applies private-sector validation rules to government establishments and enforces an invalid constraint where peak establishment employment cannot exceed firm size. This results in inconsistent reporting eligibility messages and unnecessary validation errors.
 
 Inputs:
--State: California
--Did firm have (≥11) employees?: No
--Peak Employment: 11
--NAICS Code: 111130 (Dry Pea and Bean Farming)
+-	State: California
+-	Employees (≥11): No
+-	Peak Employment: 10
+-	NAICS Code: 111130 (Dry Pea and Bean Farming)
 
 Test Variations:
 1. Non-government → Correct reporting eligibility shown
