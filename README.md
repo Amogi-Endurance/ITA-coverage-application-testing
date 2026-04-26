@@ -1,4 +1,4 @@
-OSHA ITA Coverage Testing – README
+OSHA ITA Coverage Testing
 
 Overview
 This project focuses on testing the OSHA Injury Tracking Application (ITA) Coverage Application, which determines whether establishments are required to submit OSHA injury and illness data (Forms 300, 301, and 300A).
