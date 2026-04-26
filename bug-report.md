@@ -32,35 +32,38 @@ State/Local Government
 -	NAICS Code: 111130 (Dry Pea and Bean Farming)
   
 Actual Outputs:
-Scenario 1: Non-government
+Scenario 1: 
+-Non-government
 “Based on your entries, you are required to report your OSHA Forms 300, 301 and 300A data to OSHA through the Injury Tracking Application.”
 Correct behavior
 
-Scenario 2: Federal Government
+Scenario 2: 
+-Federal Government
 “Reporting is NOT required for this establishment.” But system contradicts itself by also stating:
 “Based on your entries, you are required to report your OSHA Forms 300, 301 and 300A data…”
 Critical contradiction: exemption vs mandatory reporting
 
-Scenario 3: State/Local Government
+Scenario 3: 
+-State/Local Government
 “Reporting may be required for this establishment. Please contact your state occupational safety and health agency…”
 Correct routing to State Plan guidance
 
  Expected Result:
-Non-government:
-•	Must require submission of Forms 300, 301, 300A via ITA
-Federal Government:
-•	Must be fully exempt
-•	Must display ONLY:
+-Non-government:
+-	Must require submission of Forms 300, 301, 300A via ITA
+-Federal Government:
+-	Must be fully exempt
+-	Must display ONLY:
 “Reporting is NOT required for this establishment.”
-•	Must NOT display any reporting requirement message
-State/Local Government:
-•	Must route to State Plan guidance only
-•	Must NOT trigger federal ITA submission logic
+-	Must NOT display any reporting requirement message
+-State/Local Government:
+-	Must route to State Plan guidance only
+-	Must NOT trigger federal ITA submission logic
 
 Actual Result Summary:
-•	Non-government: Correct
-•	State/Local Government: Correct
-•	Federal Government:
+-	Non-government: Correct
+-	State/Local Government: Correct
+-	Federal Government:
 o	Shows exemption message
 o	Also shows conflicting mandatory reporting requirement
 o	Applies non-government logic incorrectly
