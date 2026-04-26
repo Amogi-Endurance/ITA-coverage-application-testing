@@ -49,27 +49,30 @@ Scenario 3:
 Correct routing to State Plan guidance
 
  Expected Result:
+ 
 -Non-government:
-o	Must require submission of Forms 300, 301, 300A via ITA
+-	Must require submission of Forms 300, 301, 300A via ITA
+  
 -Federal Government:
-o	Must be fully exempt
-o	Must display ONLY:
+-	Must be fully exempt
+-	Must display ONLY:
 “Reporting is NOT required for this establishment.”
-o	Must NOT display any reporting requirement message
+-	Must NOT display any reporting requirement message
 -State/Local Government:
-o	Must route to State Plan guidance only
-o	Must NOT trigger federal ITA submission logic
+-	Must route to State Plan guidance only
+-	Must NOT trigger federal ITA submission logic
 
 Actual Result Summary:
 -	Non-government: Correct
 -	State/Local Government: Correct
 -	Federal Government:
-o	Shows exemption message
-o	Also shows conflicting mandatory reporting requirement
-o	Applies non-government logic incorrectly
+-	Shows exemption message
+-	Also shows conflicting mandatory reporting requirement
+-	Applies non-government logic incorrectly
 
 🔴 Severity:
 Critical
+
 Impact:
 •	Federal Government users receive conflicting compliance instructions
 •	May lead to:
