@@ -1,138 +1,71 @@
-# ITA Coverage Application Testing
+OSHA ITA Coverage Testing – README
+Overview
 
-##  Project Overview
-This repository contains a structured and exploratory software testing analysis of the ITA Coverage Application developed by the Occupational Safety and Health Administration (OSHA).
+This project focuses on testing the OSHA Injury Tracking Application (ITA) Coverage Application, which determines whether establishments are required to submit OSHA injury and illness data (Forms 300, 301, and 300A).
 
-The application determines whether an establishment is required to submit workplace injury and illness data (Forms 300A, 300, and 301) through the Injury Tracking Application (ITA).
+The system applies rules based on:
 
-This project demonstrates a systematic approach to testing rule-based systems, focusing on input validation, decision logic, and system behavior.
+Establishment type (Private, Federal Government, State/Local Government)
+Employee count
+NAICS industry classification
+State Plan requirements
+Purpose of Testing
 
----
+The goal of this testing is to verify that the system:
 
-##  Objectives
-- Evaluate the correctness of reporting decisions
-- Identify inconsistencies in system logic
-- Analyze how different inputs affect outcomes
-- Explore rule hierarchy and decision pathways
-- Document findings in a professional and structured format
+Applies correct OSHA reporting rules
+Correctly distinguishes between private and government establishments
+Produces consistent and accurate reporting decisions
+Avoids conflicting compliance messages
+Test Oracles (Source of Truth)
 
----
+Test results are evaluated using official OSHA guidance:
 
-##  System Understanding
+Occupational Safety and Health Administration ITA Coverage Application rules
+OSHA Recordkeeping Regulation (29 CFR Part 1904)
+Appendix A & B (industry exemptions and reporting requirements)
+State Plan guidance for state/local government establishments
 
-The application determines reporting requirements based on:
+Business Rules Summary
+1. Private Sector (Non-government)
+Reporting required if employee size and NAICS thresholds are met
+May require Forms 300, 301, and 300A
+2. Federal Government
+Exempt from OSHA ITA submission requirements
+Should NOT be required to submit Forms 300, 301, or 300A
+3. State / Local Government
+Governed by State Plans
+Reporting requirements depend on state-specific rules
 
-- State
-- Employee size (11 or more employees)
-- Peak establishment employment
-- Government classification:
-  - Non-government
-  - Federal Government
-  - State/Local Government
-- NAICS code (industry classification)
+Testing Approach
 
----
+Testing is based on:
 
-##  Testing Approach
+✔ Structured Testing
+Using defined input combinations (state, employees, NAICS, facility type)
+✔ Test Variations
+Changing one variable at a time (e.g., facility type)
+✔ Oracle-Based Validation
+Comparing actual system output against OSHA rules and regulations
 
-Testing was conducted using a combination of:
+Key Issue Found
+Federal Government classification incorrectly triggers private-sector reporting logic in some cases
+System may produce conflicting or incorrect ITA reporting messages
 
-### 1. Variable Isolation
-Changing one input at a time to observe its impact on output.
+Expected Outcome
 
-### 2. Boundary Testing
-Testing critical thresholds such as:
-- 10 vs 11 employees
-- 20 vs 100 employees
-- 249 vs 250 employees
+The system should:
 
-### 3. Rule Exploration
-Identifying how:
-- Government type affects reporting requirements
-- NAICS codes influence eligibility
-- Employee thresholds trigger different reporting levels
+Apply correct rule hierarchy:
+Government classification (highest priority)
+State Plan rules
+Private sector NAICS + employee rules
+Avoid conflicting reporting instructions
 
-### 4. Consistency Testing
-Repeating test cases to verify stable system behavior.
+Tools / Standards Used
+OSHA ITA Coverage Application
+OSHA Recordkeeping Standard (29 CFR Part 1904)
+State Plan guidance documentation
 
-### 5. Comparative Analysis
-Running identical inputs across:
-- Different states
-- Different government types
-
----
-
-##  Key Test Areas
-
-- Input validation
-- Rule-based decision logic
-- Government classification behavior
-- Employee threshold handling
-- NAICS code influence
-- Output consistency and clarity
-- UI behavior (field persistence and reset)
-
----
-
-##  Key Findings
-
-###  Consistent Behavior
-- Non-government establishments with 11+ employees typically require **Form 300A submission**
-- State and local government establishments consistently return **“Reporting Not Required”**
-
-###  Observed Anomalies
-- Federal government selection may not always reflect correctly in output
-- Possible mismatch between UI selection and backend processing
-- Some inputs appear to default to "Non-government" behavior under certain conditions
-
-###  Discovered Rules
-- Government type can override other decision conditions
-- Employee thresholds determine reporting level (none, 300A, full reporting)
-- NAICS codes influence whether an establishment is covered or exempt
-- State has minimal impact on core reporting decisions
-
----
-
-##  Repository Structure
-
----
-
-##  Test Documentation
-
-###  Test Guide
-Outlines the testing strategy, system elements, and areas explored.
-
-###  Test Report
-Contains executed test cases, observations, and conclusions.
-
-###  Bug Report
-Documents identified issues, including reproduction steps and impact analysis.
-
-###  Screenshots
-Visual evidence supporting findings and observations.
-
----
-
-##  Known Issues
-
-- Government selection inconsistency (Federal vs Non-government behavior)
-- Input persistence concerns when switching between fields
-- Limited transparency in decision logic explanation
-
----
-
-##  Recommendations
-
-- Improve validation and persistence of input fields
-- Clarify rule logic in system output
-- Enhance user feedback for incorrect or ambiguous inputs
-- Provide clearer distinction between government categories
-
----
-
-## 👤 Tester
-
-**Amogi Endurance**
-- Experienced in structured problem-solving and logical analysis  
----
-
+Author Note
+This README is based on structured QA testing principles and official OSHA regulatory guidance used as test oracles.
