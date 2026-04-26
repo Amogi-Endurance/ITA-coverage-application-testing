@@ -7,8 +7,8 @@ The system produces inconsistent OSHA Injury Tracking Application (ITA) reportin
 In particular, Federal Government classification incorrectly triggers private-sector reporting logic, resulting in an incorrect requirement to submit OSHA Forms 300, 301, and 300A. Additionally, output messaging is inconsistent across government classifications.
 
 Test Inputs (All Scenarios):
-Scenario 1: 
-Non-government
+-Scenario 1: 
+-Non-government
 -	State: California
 -	Did firm have ≥11 employees?: Yes
 -	Peak Employment: 100
@@ -16,7 +16,7 @@ Non-government
 -	NAICS Code: 111130 (Dry Pea and Bean Farming)
   
 Scenario 2: 
-Federal Government
+-Federal Government
 -	State: California
 -	Did firm have ≥11 employees?: Yes
 -	Peak Employment: 100
@@ -50,15 +50,15 @@ Correct routing to State Plan guidance
 
  Expected Result:
 -Non-government:
--	Must require submission of Forms 300, 301, 300A via ITA
+o	Must require submission of Forms 300, 301, 300A via ITA
 -Federal Government:
--	Must be fully exempt
--	Must display ONLY:
+o	Must be fully exempt
+o	Must display ONLY:
 “Reporting is NOT required for this establishment.”
--	Must NOT display any reporting requirement message
+o	Must NOT display any reporting requirement message
 -State/Local Government:
--	Must route to State Plan guidance only
--	Must NOT trigger federal ITA submission logic
+o	Must route to State Plan guidance only
+o	Must NOT trigger federal ITA submission logic
 
 Actual Result Summary:
 -	Non-government: Correct
