@@ -1,3 +1,94 @@
+Test ID: GOV-1
+
+Title: Incorrect ITA reporting logic and inconsistent outputs across Non-government, Federal Government, and State/Local Government establishments
+
+Description:
+The system produces inconsistent OSHA Injury Tracking Application (ITA) reporting decisions for identical input values (state, employee size, peak establishment employment, and NAICS code) based on facility type selection.
+In particular, Federal Government classification incorrectly triggers private-sector reporting logic, resulting in an incorrect requirement to submit OSHA Forms 300, 301, and 300A. Additionally, output messaging is inconsistent across government classifications.
+
+Test Inputs (All Scenarios):
+Scenario 1: 
+Non-government
+-	State: California
+-	Did firm have ≥11 employees?: Yes
+-	Peak Employment: 100
+-	Facility Type: Non-government
+-	NAICS Code: 111130 (Dry Pea and Bean Farming)
+  
+Scenario 2: 
+Federal Government
+-	State: California
+-	Did firm have ≥11 employees?: Yes
+-	Peak Employment: 100
+-	Facility Type: Federal Government
+-	NAICS Code: 111130 (Dry Pea and Bean Farming)
+  
+Scenario 3: 
+State/Local Government
+-	State: California
+-	Did firm have ≥11 employees?: Yes
+-	Peak Employment: 100
+-	Facility Type: State or Local Government
+-	NAICS Code: 111130 (Dry Pea and Bean Farming)
+  
+Actual Outputs:
+Scenario 1: Non-government
+“Based on your entries, you are required to report your OSHA Forms 300, 301 and 300A data to OSHA through the Injury Tracking Application.”
+Correct behavior
+
+Scenario 2: Federal Government
+“Reporting is NOT required for this establishment.” But system contradicts itself by also stating:
+“Based on your entries, you are required to report your OSHA Forms 300, 301 and 300A data…”
+Critical contradiction: exemption vs mandatory reporting
+
+Scenario 3: State/Local Government
+“Reporting may be required for this establishment. Please contact your state occupational safety and health agency…”
+Correct routing to State Plan guidance
+
+ Expected Result:
+Non-government:
+•	Must require submission of Forms 300, 301, 300A via ITA
+Federal Government:
+•	Must be fully exempt
+•	Must display ONLY:
+“Reporting is NOT required for this establishment.”
+•	Must NOT display any reporting requirement message
+State/Local Government:
+•	Must route to State Plan guidance only
+•	Must NOT trigger federal ITA submission logic
+
+Actual Result Summary:
+•	Non-government: Correct
+•	State/Local Government: Correct
+•	Federal Government:
+o	Shows exemption message
+o	Also shows conflicting mandatory reporting requirement
+o	Applies non-government logic incorrectly
+
+🔴 Severity:
+Critical
+Impact:
+•	Federal Government users receive conflicting compliance instructions
+•	May lead to:
+o	Incorrect OSHA submissions
+o	Misclassification of government entities as private employers
+o	Regulatory compliance risk
+•	Indicates failure in rule precedence and output consistency
+Root Cause (Likely):
+-	Missing hard override rule for Federal Government
+•	Multiple rule branches executed simultaneously:
+o	Government exemption logic 
+o	Non-government NAICS + employee logic 
+•	Output layer merges conflicting rule results instead of resolving single outcome
+
+Recommendation:
+•	Implement strict rule hierarchy:
+1.	Facility Type (Highest Priority)
+o	Federal Government → Immediate EXEMPT (stop execution)
+2.	State/Local Government → State Plan routing only
+3.	Non-government → Apply NAICS + employee threshold rules
+-------------------------------------------------------------------------------------------------------------------------
+
 
 Test ID: GOV-03
 
