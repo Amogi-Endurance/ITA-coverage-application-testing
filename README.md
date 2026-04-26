@@ -41,11 +41,11 @@ Testing Approach
 
 Testing is based on:
 
-✔ Structured Testing
+- Structured Testing
 Using defined input combinations (state, employees, NAICS, facility type)
-✔ Test Variations
+- Test Variations
 Changing one variable at a time (e.g., facility type)
-✔ Oracle-Based Validation
+- Oracle-Based Validation
 Comparing actual system output against OSHA rules and regulations
 
 Key Issue Found
