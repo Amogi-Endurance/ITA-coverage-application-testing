@@ -1,6 +1,6 @@
 # ITA Coverage Application Testing
 
-## 📌 Project Overview
+##  Project Overview
 This repository contains a structured and exploratory software testing analysis of the ITA Coverage Application developed by the Occupational Safety and Health Administration (OSHA).
 
 The application determines whether an establishment is required to submit workplace injury and illness data (Forms 300A, 300, and 301) through the Injury Tracking Application (ITA).
@@ -9,7 +9,7 @@ This project demonstrates a systematic approach to testing rule-based systems, f
 
 ---
 
-## 🎯 Objectives
+##  Objectives
 - Evaluate the correctness of reporting decisions
 - Identify inconsistencies in system logic
 - Analyze how different inputs affect outcomes
@@ -18,7 +18,7 @@ This project demonstrates a systematic approach to testing rule-based systems, f
 
 ---
 
-## 🧠 System Understanding
+##  System Understanding
 
 The application determines reporting requirements based on:
 
@@ -33,7 +33,7 @@ The application determines reporting requirements based on:
 
 ---
 
-## 🔍 Testing Approach
+##  Testing Approach
 
 Testing was conducted using a combination of:
 
@@ -62,7 +62,7 @@ Running identical inputs across:
 
 ---
 
-## 🧪 Key Test Areas
+##  Key Test Areas
 
 - Input validation
 - Rule-based decision logic
@@ -74,7 +74,7 @@ Running identical inputs across:
 
 ---
 
-## 📊 Key Findings
+##  Key Findings
 
 ### ✔ Consistent Behavior
 - Non-government establishments with 11+ employees typically require **Form 300A submission**
@@ -85,7 +85,7 @@ Running identical inputs across:
 - Possible mismatch between UI selection and backend processing
 - Some inputs appear to default to "Non-government" behavior under certain conditions
 
-### 🧠 Discovered Rules
+###  Discovered Rules
 - Government type can override other decision conditions
 - Employee thresholds determine reporting level (none, 300A, full reporting)
 - NAICS codes influence whether an establishment is covered or exempt
@@ -93,4 +93,50 @@ Running identical inputs across:
 
 ---
 
-## 🧾 Repository Structure
+##  Repository Structure
+
+---
+
+##  Test Documentation
+
+###  Test Guide
+Outlines the testing strategy, system elements, and areas explored.
+
+###  Test Report
+Contains executed test cases, observations, and conclusions.
+
+###  Bug Report
+Documents identified issues, including reproduction steps and impact analysis.
+
+###  Screenshots
+Visual evidence supporting findings and observations.
+
+---
+
+##  Known Issues
+
+- Government selection inconsistency (Federal vs Non-government behavior)
+- Input persistence concerns when switching between fields
+- Limited transparency in decision logic explanation
+
+---
+
+##  Recommendations
+
+- Improve validation and persistence of input fields
+- Clarify rule logic in system output
+- Enhance user feedback for incorrect or ambiguous inputs
+- Provide clearer distinction between government categories
+
+---
+
+## 👤 Tester
+
+**Amogi Endurance**
+
+- Data Analyst | Health Informatics Specialist  
+- Skilled in data validation, analysis, and system evaluation  
+- Experienced in structured problem-solving and logical analysis  
+
+---
+
