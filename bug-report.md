@@ -8,7 +8,7 @@ When "Federal Government" is selected, the system returns the same reporting req
 
 Inputs:
 - State: Georgia
-- Employees: Yes
+- Employees (≥11): Yes
 - Peak Employment: 300
 - NAICS: 111335 (Tree Nut Farming)
 
