@@ -91,49 +91,48 @@ o	Is excluded from private-sector exemption rules and wording
 ----------------------------------------------------------------------------------------------------------------------
 
 Test ID: GOV-05
-Title:
-
-Incorrect validation and reporting logic for government establishments and peak employment constraint
+Title: Incorrect validation and reporting logic for government establishments and peak employment constraint
 
 Description:
 
 The system incorrectly applies private-sector validation rules to government establishments and enforces an invalid constraint where peak establishment employment cannot exceed firm size. This results in inconsistent reporting eligibility messages and unnecessary validation errors.
 
 Inputs:
-State: California
-Did firm have ≥11 employees?: No
-Peak Employment: 11
-NAICS Code: 111130 (Dry Pea and Bean Farming)
+-State: California
+-Did firm have ≥11 employees?: No
+-Peak Employment: 11
+-NAICS Code: 111130 (Dry Pea and Bean Farming)
+
 Test Variations:
-Non-government → Correct reporting eligibility shown
-Federal Government → Validation error displayed
-State/Local Government → Validation error displayed
+1. Non-government → Correct reporting eligibility shown
+2. Federal Government → Validation error displayed
+3. State/Local Government → Validation error displayed
+
 Expected Result:
-Peak establishment employment should be accepted as valid input when consistent with system rules
-Government establishments should:
-Be exempt from ITA reporting
-Not be affected by private-sector validation rules
-No validation error should be triggered for government classification cases
+-Peak establishment employment should be accepted as valid input when consistent with system rules
+-Government establishments should:
+-Be exempt from ITA reporting
+-Not be affected by private-sector validation rules
+-No validation error should be triggered for government classification cases
+
 Actual Result:
-
-System displays error message:
-
+-System displays error message:
 “Peak establishment employment cannot be larger than Firm size.”
+-Government establishments are incorrectly subjected to private-sector validation logic
+-Reporting exemption logic is not consistently applied
 
-Government establishments are incorrectly subjected to private-sector validation logic
-Reporting exemption logic is not consistently applied
 Severity:
-
 🔴 High
 
 Impact:
-Blocks valid data input due to incorrect validation rules
-Applies private-sector constraints to government entities
-Produces inconsistent reporting eligibility outcomes
-Impacts usability and compliance accuracy
+-Blocks valid data input due to incorrect validation rules
+-Applies private-sector constraints to government entities
+-Produces inconsistent reporting eligibility outcomes
+-Impacts usability and compliance accuracy
+
 Recommendation:
-Separate validation rules from reporting eligibility logic
-Ensure government classification bypasses firm-size constraints
-Review and correct logic for peak employment validation handling
-Prevent cross-contamination between private-sector and government rule sets
+-Separate validation rules from reporting eligibility logic
+-Ensure government classification bypasses firm-size constraints
+-Review and correct logic for peak employment validation handling
+-Prevent cross-contamination between private-sector and government rule sets
 
