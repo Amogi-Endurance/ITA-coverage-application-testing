@@ -99,7 +99,7 @@ The system incorrectly applies private-sector validation rules to government est
 
 Inputs:
 -State: California
--Did firm have ≥11 employees?: No
+-Did firm have (≥11) employees?: No
 -Peak Employment: 11
 -NAICS Code: 111130 (Dry Pea and Bean Farming)
 
