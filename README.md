@@ -133,10 +133,6 @@ Visual evidence supporting findings and observations.
 ## 👤 Tester
 
 **Amogi Endurance**
-
-- Data Analyst | Health Informatics Specialist  
-- Skilled in data validation, analysis, and system evaluation  
 - Experienced in structured problem-solving and logical analysis  
-
 ---
 
