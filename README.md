@@ -76,11 +76,11 @@ Running identical inputs across:
 
 ##  Key Findings
 
-### ✔ Consistent Behavior
+###  Consistent Behavior
 - Non-government establishments with 11+ employees typically require **Form 300A submission**
 - State and local government establishments consistently return **“Reporting Not Required”**
 
-### ⚠ Observed Anomalies
+###  Observed Anomalies
 - Federal government selection may not always reflect correctly in output
 - Possible mismatch between UI selection and backend processing
 - Some inputs appear to default to "Non-government" behavior under certain conditions
