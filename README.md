@@ -70,14 +70,5 @@ This document is useful for:
 
 ---
 
-## Example Bug Scenario
-If a system requires:
-
-> Federal Government → OSHA 300/301/300A submission
-
-This is incorrect because federal government agencies are not part of ITA-covered establishments.
-
----
-
 ## Summary
 OSHA ITA reporting applies mainly to private employers, with some state/local government inclusion. Federal government agencies are excluded.
