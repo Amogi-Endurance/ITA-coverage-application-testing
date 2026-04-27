@@ -30,17 +30,17 @@ The system typically uses:
 ## Establishment Types
 
 ### 1. Private Sector (Non-government)
-✔ Most common category  
-✔ May be required to submit ITA reports depending on:
+Most common category  
+May be required to submit ITA reports depending on:
 - Employee count
 - Industry risk level (NAICS code)
 
 ---
 
 ### 2. Government (State/Local)
-✔ May be partially included  
-✔ Reporting depends on State OSHA Plan rules  
-✔ Not always required to report
+May be partially included  
+Reporting depends on State OSHA Plan rules  
+Not always required to report
 
 ---
 
@@ -59,7 +59,7 @@ Input:
 - NAICS: High-hazard industry
 
 Expected:
-✔ ITA submission required (Forms 300, 301, 300A)
+ITA submission required (Forms 300, 301, 300A)
 
 ---
 
@@ -70,7 +70,7 @@ Input:
 - NAICS: Low-risk industry
 
 Expected:
-✔ May be exempt from ITA submission
+May be exempt from ITA submission
 
 ---
 
