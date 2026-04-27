@@ -1,7 +1,7 @@
 # OSHA ITA Reporting – Test Guide (Simple)
 
 ## Purpose
-This guide helps testers verify that a system correctly determines when an establishment must submit OSHA Injury Tracking Application (ITA) reports.
+This guide will help verify if the system correctly determines when an establishment must submit OSHA Injury Tracking Application (ITA) reports.
 
 The ITA system handles submission of:
 - OSHA Form 300
