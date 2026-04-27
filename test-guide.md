@@ -1,193 +1,124 @@
-# ITA COVERAGE APPLICATION – TEST GUIDE
+# OSHA ITA Reporting – Test Guide (Simple)
 
-## 1. Introduction
+## Purpose
+This guide helps testers verify that a system correctly determines when an establishment must submit OSHA Injury Tracking Application (ITA) reports.
 
-This document defines the structured approach for testing the ITA Coverage Application developed by the Occupational Safety and Health Administration (OSHA).
-
-The application determines whether an establishment is required to submit workplace injury and illness data (Forms 300A, 300, and 301) through the Injury Tracking Application (ITA).
-
----
-
-## 2. Purpose
-
-The purpose of this test guide is to:
-
-- Identify all testable elements of the system
-- Define a structured approach to testing
-- Explore and validate system behavior under different conditions
-- Support consistent and repeatable testing
-- Capture both expected and unexpected system behavior
+The ITA system handles submission of:
+- OSHA Form 300
+- OSHA Form 301
+- OSHA Form 300A
 
 ---
 
-## 3. System Overview
-
-The ITA Coverage Application evaluates reporting requirements based on user-provided inputs and predefined regulatory rules.
-
-### Core Inputs:
-- State
-- Firm size (11 or more employees)
-- Peak establishment employment
-- Government classification:
-  - Non-government
-  - Federal Government
-  - State or Local Government
-- NAICS code (industry classification)
-
-### Core Outputs:
-- Reporting NOT required
-- Submit Form 300A
-- Submit Form 300A + 300/301
+## What is being tested?
+We are testing whether the system correctly:
+- Identifies establishment type
+- Applies OSHA reporting rules
+- Determines ITA submission requirements
 
 ---
 
-## 4. Test Scope
-
-### In Scope:
-- Input field behavior
-- Validation rules
-- Decision logic and rule processing
-- Output accuracy and consistency
-- UI behavior and state persistence
-
-### Out of Scope:
-- Backend implementation details
-- External system integrations
-- Performance and load testing
+## Key Factors Used in Decision
+The system typically uses:
+- Establishment type (Private, Government, etc.)
+- Number of employees
+- Industry classification (NAICS code)
+- State or federal reporting rules
 
 ---
 
-## 5. Test Approach
+## Establishment Types
 
-Testing will be conducted using an exploratory and analytical approach:
-
-### 5.1 Variable Isolation
-Only one input variable is changed at a time to determine its impact on system output.
-
-### 5.2 Boundary Testing
-Critical threshold values will be tested, including:
-- 10 vs 11 employees
-- 20 vs 21 employees
-- 99 vs 100 employees
-- 249 vs 250 employees
-
-### 5.3 Rule Exploration
-System behavior will be analyzed to identify:
-- Rule hierarchy
-- Conditional dependencies
-- Override conditions
-
-### 5.4 Consistency Testing
-Repeated execution of identical inputs to verify stability and determinism.
-
-### 5.5 Comparative Testing
-Testing identical scenarios across:
-- Different states
-- Different government types
-- Different NAICS codes
+### 1. Private Sector (Non-government)
+✔ Most common category  
+✔ May be required to submit ITA reports depending on:
+- Employee count
+- Industry risk level (NAICS code)
 
 ---
 
-## 6. Testable System Elements
-
-### 6.1 Input Fields
-- State selection
-- Employee size selection
-- Peak employment input
-- Government classification selection
-- NAICS code selection
-
-### 6.2 Input Validation
-- Required field enforcement
-- Numeric validation (peak employment)
-- Handling of invalid or incomplete inputs
-
-### 6.3 Decision Logic
-- Employee threshold rules
-- Government classification rules
-- NAICS-based eligibility rules
-
-### 6.4 Rule Interaction
-- Interaction between government type and employee thresholds
-- Interaction between NAICS and reporting requirements
-- Identification of rule overrides
-
-### 6.5 UI Behavior
-- Field persistence after selection
-- Field reset behavior when inputs change
-- Default values and auto-selection behavior
-
-### 6.6 Output Behavior
-- Accuracy of reporting decision
-- Clarity of system messages
-- Alignment between input and output
+### 2. Government (State/Local)
+✔ May be partially included  
+✔ Reporting depends on State OSHA Plan rules  
+✔ Not always required to report
 
 ---
 
-## 7. Key Test Focus Areas
-
-- Government classification consistency (especially Federal Government behavior)
-- Employee threshold transitions
-- NAICS code influence on reporting decisions
-- Input persistence and UI state handling
-- Output consistency and logical correctness
+### 3. Government (Federal)
+Typically not included in ITA submission  
+Follows separate federal safety reporting systems
 
 ---
 
-## 8. Risks and Assumptions
+## General Test Scenarios
 
-### Risks:
-- Incorrect classification may lead to compliance errors
-- Input misinterpretation may affect decision accuracy
-- Lack of transparency in rule logic may obscure defects
+### Scenario 1: Private Company – High Risk Industry
+Input:
+- Establishment type: Private
+- Employees: 150
+- NAICS: High-hazard industry
 
-### Assumptions:
-- Inputs provided by the user are intended to reflect real-world scenarios
-- The system applies OSHA regulatory rules consistently
-
----
-
-## 9. Test Data Strategy
-
-Test data will include:
-
-- Valid inputs (expected scenarios)
-- Boundary values
-- Edge cases
-- Invalid and unexpected inputs
-
-Examples:
-- Low employee counts (e.g., 10)
-- Threshold values (e.g., 11, 20, 100, 250)
-- Different government types
-- Multiple NAICS codes across industries
+Expected:
+✔ ITA submission required (Forms 300, 301, 300A)
 
 ---
 
-## 10. Observation and Documentation
+### Scenario 2: Private Company – Low Risk Industry
+Input:
+- Establishment type: Private
+- Employees: 50
+- NAICS: Low-risk industry
 
-Each test execution will capture:
-
-- Test ID
-- Input values
-- Expected outcome
-- Actual result
-- Observations
-- Identified issues (if any)
+Expected:
+✔ May be exempt from ITA submission
 
 ---
 
-## 11. Success Criteria
+### Scenario 3: Government Establishment
+Input:
+- Establishment type: Government (State/Local or Federal)
+- Employees: Any
+- NAICS: Any
 
-Testing will be considered successful when:
-
-- System behavior is consistent and repeatable
-- Outputs align logically with inputs
-- Key rules and decision paths are understood
-- Any inconsistencies or anomalies are clearly documented
+Expected:
+Follow government-specific rules  
+May be exempt depending on category and rules engine logic
 
 ---
 
-## 12. Conclusion
+## Key Validation Rules
 
-This test guide provides a structured framework for evaluating the ITA Coverage Application. It ensures that testing is systematic, comprehensive, and focused on understanding both system behavior and underlying decision logic.
+The system should ALWAYS:
+1. Identify establishment type first  
+2. Apply government vs private rules correctly  
+3. Then evaluate employee count and NAICS code  
+
+---
+
+## Common Issues to Test For
+
+- Government treated as private company
+- Wrong application of NAICS rules
+- Employee thresholds applied before establishment type
+- Incorrect ITA submission requirement for exempt entities
+
+---
+
+## Expected Outcome
+
+A correct system should:
+- Apply OSHA rules consistently
+- Avoid misclassification of establishment types
+- Only require ITA submission when conditions are truly met
+
+---
+
+## Summary
+
+ITA reporting is based on a combination of:
+- Establishment type
+- Industry classification
+- Employee count
+- Regulatory exemptions
+
+Correct classification logic is critical for compliance accuracy.
