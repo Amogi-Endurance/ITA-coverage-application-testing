@@ -1,60 +1,83 @@
-OSHA ITA Coverage Testing
+# OSHA ITA Reporting
 
-Overview
-This project focuses on testing the OSHA Injury Tracking Application (ITA) Coverage Application, which determines whether establishments are required to submit OSHA injury and illness data (Forms 300, 301, and 300A).
+## Overview
+This project explains OSHA Injury Tracking Application (ITA) reporting requirements in simple terms. It is meant to help QA testers, developers, and non-technical users understand who must submit OSHA injury and illness data.
 
-The system applies rules based on:
-Establishment type (Private, Federal Government, State/Local Government)
-Employee count
-NAICS industry classification
-State Plan requirements
-Purpose of Testing
+---
 
-The goal of this testing is to verify that the system:
-Applies correct OSHA reporting rules
-Correctly distinguishes between private and government establishments
-Produces consistent and accurate reporting decisions
-Avoids conflicting compliance messages
-Test Oracles (Source of Truth)
+## What is OSHA ITA?
+The OSHA Injury Tracking Application (ITA) is an online system where certain employers must submit workplace injury and illness records.
 
-Test results are evaluated using official OSHA guidance:
-Occupational Safety and Health Administration ITA Coverage Application rules
-OSHA Recordkeeping Regulation (29 CFR Part 1904)
-Appendix A & B (industry exemptions and reporting requirements)
-State Plan guidance for state/local government establishments
+These records include:
+- OSHA Form 300
+- OSHA Form 301
+- OSHA Form 300A
 
-Business Rules Summary
-1. Private Sector (Non-government)
-Reporting required if employee size and NAICS thresholds are met
-May require Forms 300, 301, and 300A
-2. Federal Government
-Exempt from OSHA ITA submission requirements
-Should NOT be required to submit Forms 300, 301, or 300A
-3. State / Local Government
-Governed by State Plans
-Reporting requirements depend on state-specific rules
+---
 
-Testing Approach
-Testing is based on:
-- Structured Testing
-Using defined input combinations (state, employees, NAICS, facility type)
-- Test Variations
-Changing one variable at a time (e.g., facility type)
-- Oracle-Based Validation
-Comparing actual system output against OSHA rules and regulations
+## Who must submit ITA reports?
 
-Expected Outcome
-The system should:
-Apply correct rule hierarchy:
-Government classification (highest priority)
-State Plan rules
-Private sector NAICS + employee rules
-Avoid conflicting reporting instructions
+### 1. Private Companies (Main Group)
+Most ITA reporting applies to private businesses such as:
+- Farms
+- Factories
+- Construction companies
+- Retail stores
 
-Tools / Standards Used
-OSHA ITA Coverage Application
-OSHA Recordkeeping Standard (29 CFR Part 1904)
-State Plan guidance documentation
+They must report if they meet OSHA requirements such as:
+- Employee size thresholds
+- High-hazard industry classification
 
-Note
-This README is based on structured QA testing principles and official OSHA regulatory guidance used as test oracles.
+---
+
+### 2. State and Local Government (Limited Cases)
+Some state and local government employers may be required to report.
+
+This depends on:
+- Whether the state runs its own OSHA program (State Plan)
+- State-specific reporting rules
+
+---
+
+## Who is NOT required to submit ITA reports?
+
+### Federal Government
+Federal government agencies:
+- Are NOT part of OSHA ITA reporting requirements
+- Do NOT submit Forms 300, 301, or 300A through ITA
+- Follow separate internal safety reporting systems
+
+---
+
+## Simple Rule
+
+- Private companies → May be required to report  
+- Some state/local governments → May be required (depends on state)  
+- Federal government → NOT included in ITA reporting  
+
+---
+
+## Key Insight
+ITA reporting rules are designed mainly for private employers. Government employers are treated differently, and federal agencies are excluded from ITA submission requirements.
+
+---
+
+## Use Case
+This document is useful for:
+- QA testing (validation of compliance rules)
+- Bug reporting (like incorrect classification issues)
+- Understanding OSHA ITA eligibility logic
+
+---
+
+## Example Bug Scenario
+If a system requires:
+
+> Federal Government → OSHA 300/301/300A submission
+
+This is incorrect because federal government agencies are not part of ITA-covered establishments.
+
+---
+
+## Summary
+OSHA ITA reporting applies mainly to private employers, with some state/local government inclusion. Federal government agencies are excluded.
