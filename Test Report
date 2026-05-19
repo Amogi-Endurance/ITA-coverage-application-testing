@@ -1,1 +1,202 @@
+ITA Coverage Application Test Report
+By Amogi Endurance Friday
+Reviewed/Supervised by James Bach
+
+Mission
+The mission was to explore and evaluate the ITA Coverage Application and determine whether it correctly identifies establishments required to submit 300A and 300/301 form to OSHA injury and illness data. https://www.satisfice.com/osha.htm. This report describes the application behavior, the testing process, and issues identified during testing.
+Product Information
+The ITA Coverage Application is a decision-support tool developed under the Occupational Safety and Health Administration. Which helps establishment determine whether they are required to electronically submit 300A and 300/301 form through the ITA. The logic is based on; https://www.osha.gov/recordkeeping/presentations/exempttable 29 CFR Part 1904 OSHA Recordkeeping Regulation Specifically 29 CFR 1904.41 https://www.osha.gov/recordkeeping/naics-codes-electronic-submission and https://www.osha.gov/sites/default/files/appendix_b_to_subpart_e_of_part_1904.pdf
+The following key input variables were identified as critical to the system’s decision logic:
+•	Company size 
+•	Industry classification (NAICS code) 
+•	Employer type (Private or Government) 
+•	Location (State (USA) selection)
+Test Process
+I began by exploring the application to identify the variables that influence reporting decisions before going into targeted tests around thresholds, classification behavior, employer type separation, and rule interaction.
+The following activities were carried out during testing:
+•	Interaction with all functional user interface elements, including dropdowns, input fields, and links navigation
+•	Systematic variation of input combinations such as: 
+•	Different employee size values 
+•	Various industry classifications (NAICS codes) 
+•	Employer type selections (Private, Federal Government, State/Local Government) 
+•	Observation of system responses to determine decision logic accuracy 
+Oracles Used
+The expected results in this testing were derived from OSHA recordkeeping and reporting requirements under 1904.1(a)(1)(2) as implemented in the ITA Coverage Application. The following rules were used as the basis for determining expected system behavior:
+Rule 1 – 250 Establishments (Form 300A)
+Establishments with 250 or more employees, and not classified in exempt industries (Appendix A to Subpart B of 29 CFR Part 1904), are required to submit Form 300A data. 29 CFR 1904.41(a)(1)(ii)
+Rule 2 – 20-249 Establishments (Form 300A)
+Establishments with 20–249 employees, and operating in industries listed in Appendix A to Subpart E of 29 CFR Part 1904, are required to submit Form 300A data. 29 CFR 1904.41(a)(1)(i)
+Rule 3 – Detailed Reporting Requirement 100 or more employees (Forms 300, 301, and 300A)
+Establishments with 100 or more employees, and operating in industries listed in Appendix B to Subpart E of 29 CFR Part 1904, are required to submit Forms 300, 301, and 300A data. 29 CFR 1904.41(a)(2)
+Rule 4 – Exempt or Low-Risk Establishments
+Establishments that do not meet the required employee thresholds or are classified in partially exempt industries are not required to keep OSHA injury and illness records or submit data, unless specifically requested. 29 CFR 1904.41(b)(1) – Partial exemption for establishments in certain industries
+•	Private sector employers are subject to ITA reporting requirements based on size and industry classification. 
+•	Federal Agency reports Injury and Illness Information. 29 CFR 1960.72(a) Each agency must submit to the Secretary by May 1 of each year all information included on the agency’s previous calendar year’s occupational injury and illness recordkeeping forms. The information submitted must include all data entered on the OSHA Form 300, Log of Work-Related Injuries and Illnesses (or equivalent); OSHA Form 301, Injury and Illness Incident Report (or equivalent); and OSHA However, 491110 Postal Service is required to maintain OSHA injury and illness records (Forms 300, 300A, and 301) in accordance with 29 CFR Part 1904, as documented in the USPS Employee and Labor Relations Manual (ELM), Section 821.11.
+•	State and local government employers in State Plan states have different requirements; in such cases, the system may return a conditional result advising users to consult their state agency. Source: https://www.osha.gov/stateplans
+Test Strategy
+The test design was based on OSHA regulatory rules and decision boundaries. Since there are about 1179 NAICS codes, and animation wasn’t used. I selected test values using a structured approach based on OSHA regulatory groupings and reporting logic.
+The strategy focused on covering: (See Test coverage outline below)
+•	OSHA NAICS regulatory groups (Appendix A, Appendix B, and exception cases) 
+•	Employee count decision thresholds 
+•	Employer type separation rules 
+•	Interactions between employee count, NAICS classification, employer type, and state selection 
+The goal was to verify whether the system correctly applies OSHA reporting rules across different regulatory scenarios.
+The detailed test design approach is shown in the table below.
+Test Area	How Test Values Were Selected	Why I Selected Them	What I Was Testing
+NAICS Regulatory Grouping	I selected NAICS codes from OSHA Appendix A (partially exempt industries), Appendix B (100+ employee reporting industries), standard non-exempt industries, and USPS (491110) as a special exception case	I wanted the test design to follow OSHA regulatory groupings instead of general industry categories	Whether the system applies the correct OSHA reporting rules based on NAICS classification
+Employee Count (Thresholds)	I used values: 9,10, 20, 50, 99, 100, 120, 250, 300, 500000, and 1000000	These values were chosen around OSHA rule thresholds (20, 100, and 250), including values below, above, and extremely high values	Whether the system changes reporting decisions correctly at threshold points and still behaves correctly with very large numbers
+Employer Type Separation	I tested Private, Federal Government, and State/Local Government	OSHA applies different rules to each employer type	Whether the system keeps the rule logic separate for each employer type
+State Selection (State Plan Logic)	I selected different U.S. states such as California, Oregon, Minnesota, Utah, and others	Some states operate under State Plans while others follow Federal OSHA rules	Whether state selection changes reporting results correctly or only provides State Plan guidance
+Input Validation Testing	I entered invalid values such as -560, 100.5, 100A, and zero values	These inputs were chosen to test how the system handles incorrect or unusual data	Whether invalid inputs are rejected or accepted
+Exception Handling (USPS Case)	I tested NAICS 491110 across different employee sizes and employer types	USPS is a known OSHA exception case with different handling requirements	Whether the system correctly applies exception logic instead of standard reporting rules
+
+Test Results
+The application appears functional and responsive, with a simple interface.
+During my initial testing, I intentionally left some required fields unselected to evaluate system validation behavior. The system prevented submission and highlighted missing fields in red, confirming that input validation is enforced. The application provides clear visual feedback and blocks submission until all required fields are completed. Additionally, input fields restrict entries to numeric values only.
+
+Test Case	Summary	State	Employees	Government	NAICS	Actual	Status
+TC-01	Below Threshold	Washington	9	Private	111110	No submission	Pass
+TC-02	Boundary 20	Washington	20	Private	445299	300A only	Pass
+TC-03	Medium High Risk	Georgia	50	Private	315210	300A only	Pass
+TC-04	100+ Employees	Wisconsin	120	Private	325110	300A only	Pass
+TC-05	Federal Government	Oklahoma	250	Federal	111335	Submission required	Pass
+TC-06	Invalid Input	Alabama	-560	Private	111110	Flagged	Pass
+TC-07	Federal Govt submission for Postal services	Lowa	100	Federal	491110	Forms 300, 301 and 300A	Pass
+TC-08	State/Local Govt refer to State plans	Minnesota	100	State/Local	111130	Contact State plan	pass
+TC-09	Reject Decimal, Zero and Alphabet values	Minnesota	100.5 & 100A	Private	111130	Flagged decimal, zero & Alphabet inputs	pass
+TC-10	Federal Government – Low Employee Count	Colorado	10	Federal	111120	System returns “partially exempt” based on employee size, applying private-sector logic (incorrect)	Pass
+TC-11	Scientific notation	Alabama	1.00E+02	Private	111130	Forms 300, 301 and 300A	pass
+TC-12	Federal Government – High Employee Count	Florida	300	Federal	111120	Forms 300, 301 and 300A	Pass
+TC-13	Exploring interaction between employee threshold and agricultural NAICS classification	Illinois	101	Private	111120	Forms 300, 301 and 300A.	Pass
+								
+TC-14	Exploring interaction between employee threshold and agricultural NAICS classification	Illinois	101	Federal	111120	Forms 300, 301 and 300A.	Pass	
+								
+TC-15	Exploring interaction between employee threshold and agricultural NAICS classification	Illinois	101	State/Local	111120	Contact State plan	pass	
+TC-16	High-risk industry threshold	Alaska	120	Private	111120	Forms 300, 301 and 300A	Pass	
+TC-17	Federal misclassification check	Alaska	120	Federal	111120	Forms 300, 301 and 300A	Pass	
+TC-18	State plan routing check	Alaska	120	State/Local	111120	Contact State Plan	Pass	
+TC-19	Manufacturing mid-threshold	Califonia	50	Private	311111	Form 300A	Pass	
+TC-20	Federal misclassification check	Califonia	50	Federal	311111	Form 300A 	Pass	
+TC-21	State plan routing check	Califonia	50	State/Local	311111	Contact State Plan	Pass	
+TC-22	Retail high threshold	Utah	300	Private	445299	Form 300A 	Pass	
+TC-23	Federal misclassification check	Utah	300	Federal	445299	Form 300A 	Pass	
+TC-24	State plan routing check	Utah	300	State/Local	445299	Contact State Plan	Pass	
+TC-25	Low employee exemption	South Carolina	11	Private	621111	No Submission required	Pass	
+TC-26	Federal misclassification check	South Carolina	11	Federal	621111	No Submission required	Pass	
+TC-27	State plan routing check	South Carolina	11	State/Local	621111	Contact State Plan	Pass	
+TC-28	Construction high workforce	Idaho	400	Private	236220	No Submission required	Pass	
+TC-29	Federal misclassification check	Idaho	400	Federal	236220	No Submission required	Pass	
+TC-30	State plan routing check	Idaho	400	State/Local	236220	Contact State Plan	Pass	
+TC-31	Extreme workforce scenario	Vermont	500000	Private	484110	Forms 300, 301 and 300A	Pass	
+TC-32	Federal misclassification check	Vermont	500000	Federal	484110	Forms 300, 301 and 300A	Pass	
+TC-33	State plan routing check	Vermont	500000	State/Local	484110	Contact State Plan	Pass	
+TC-34	State-driven override behavior	Oregon	1000000	Private	511210	Submission not required	Pass	
+TC-35	Federal inconsistency check	Oregon	1000000	Federal	511210	No Submission required	Pass	
+TC-36	State plan routing check	Oregon	1000000	State/Local	511210	Contact State Plan	Pass	
+
+Test Observations
+During testing, the application was generally stable and easy to use.
+1. Input Validation
+The system correctly required all mandatory fields before submission. When fields were missing, it stopped the user from continuing.
+It also correctly handled invalid inputs such as negative numbers, decimals (e.g. 100.5), letters mixed with numbers (e.g. 100A). These inputs were either rejected or flagged, but and scientific notation (e.g. 1e2) was accepted. This shows that basic input checking is working properly.
+2. Employee Count Behaviour
+The system correctly applied OSHA employee rules at key points like 20, 100, and 250 employees for private companies. Even very large values like 500,000 and 1,000,000 did not break the system, and it still returned results normally.
+3. NAICS Classification Behaviour
+Different NAICS codes produced different results in private-sector cases, which shows that industry type is used in decision making. However, results were not always consistent when comparing different employer types, especially federal cases.
+4. USPS Exception
+The only exception was USPS (491110), which worked correctly and followed expected rules.
+5. State Selection Behaviour
+When “State/Local Government” was selected, the system correctly showed “State Plan” guidance.
+6. Combined Rules (Interaction Testing)
+When inputs were used together (employee count, NAICS code, employer type, and state), the system generally worked well.
+Key Risks
+The primary risk identified is the delivery of incorrect regulatory guidance that appears valid, which may lead to improper compliance decisions.
+•	The defect is consistent across multiple NAICS categories and employee thresholds, increasing the likelihood of widespread impact 
+•	Inadequate NAICS validation may allow incorrect or unintended industry classifications, leading to inaccurate reporting determinations 
+•	Acceptance of non-standard numeric formats (e.g., scientific notation) may introduce ambiguity or unintended inputs into decision logic 
+•	Misinterpretation of regulatory requirements could result in under-reporting or over-reporting, creating potential compliance and operational risks 
+•	The system may look like it’s working fine, but it can still give wrong results, and users might not notice unless they understand the rules well.
+Recommendations
+The following recommendations are based on observed inconsistencies in the application’s decision logic and validation behavior
+•	Validate user input against NAICS codes to prevent acceptance of invalid or non-existent codes. 
+•	It handles inputs such as scientific notation (e.g., 1e2) to ensure consistency with expected user input formats. 
+•	Provide users with brief explanations of how decisions are made (e.g., based on employee size and industry classification) to improve trust and clarity. 
+•	Implement checks to ensure that logic applied aligns with the selected employer type (Private, Federal, State/Local), preventing cross-application of rules. 
+•	Ensure that similar inputs produce consistent results across different states and scenarios, especially for Federal and State Plan logic. 
+•	Where applicable, enhance messaging for State/Local Government selections to guide users more precisely on next steps.
+Conclusion 
+Based on my assessment, the ITA Coverage Application is generally stable and behaves consistently across most tested scenarios. The system correctly handles employee thresholds, NAICS classification, required field validation, and State Plan routing. Testing showed that the application uses rule-based logic tied to OSHA reporting requirements. Federal government scenarios were more complex because federal agencies are also required to submit injury and illness information under 29 CFR 1960.72(a). Overall, the application appears functional and reliable, but stronger NAICS validation and clearer explanation of reporting decisions would improve confidence in the system’s results.
+
+
+
+
+
+
+
+
+
+ITA Coverage Application Bug Reports
+
+ID	1
+Project	ITA Coverage Application
+Created	12.05.2026
+Summary	Incorrect federal government display as non-government
+Category	Logic Issue
+Severity	Normal
+Description	After selecting District of Columbia, with peak establishment of 50, and NAICS code of 484220 it returns federal government and non-government.
+
+Steps	Enter
+•	State = District of Columbia
+•	Firm has 11 or more employees = Yes
+•	Peak establishment employment = 50
+•	Government = Yes, Federal government
+•	NAICS code = 484220
+•	Submit
+Environment	Version 1.0
+
+
+
+
+
+
+
+
+
+Attachments	 
+
+ 
+
+Reporter	Amogi Endurance
+ID	2
+Project	ITA Coverage Application
+Created	02.05.2026
+Summary	System does not validate invalid NAICS codes
+Category	Validation Issue
+Severity	Normal
+Description	The NAICS input field accepts invalid numeric values (e.g., 666666) that are not part of the official NAICS classification list. The system does not perform validation against approved NAICS codes though it doesnt allows submission to proceed without raising any error or warning.
+Steps	Enter
+•	State = American Samoa
+•	Firm has 11 or more employees = Yes
+•	Peak establishment employment = 120
+•	Government = No
+•	NAICS code = 666666
+•	Submit
+Environment	Version 1.0
+
+
+
+
+
+
+
+
+
+Attachments	 
+
+Recommendation	I recommend that a validation for the NAICS field to ensure only valid industry classification codes from the official NAICS list are accepted. This should include: user-friendly error messaging for invalid inputs
+Reporter	Amogi Endurance
+
+
+
+Test coverage outline
 
