@@ -193,6 +193,3 @@ This project improved my understanding of:
 Amogi Endurance Friday
 
 Senior Technical Associate Health Informatics | Data Analyst | Software Tester
-
-
-LinkedIn: [Add your LinkedIn link]
